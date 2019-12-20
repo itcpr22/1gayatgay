@@ -16,10 +16,10 @@ import javax.swing.JOptionPane;
  * @author HP
  */
 public class connections {
-    public String driver = "com.mysql.jdbc.Driver";
-public String local = "jdbc:mysql://localhost/raprap?";
-public String sr = "";
-public String ps = "root";
+      protected String dbname = "raprap";
+    protected String url = "jdbc:mysql://localhost/"+dbname;
+    protected String username = "root";
+    protected String password = ""; 
 
 
 

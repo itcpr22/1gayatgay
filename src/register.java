@@ -15,13 +15,13 @@ import java.util.logging.Logger;/*
  * @author HP
  */
 class register {
- connections cn = new connections();
+ connections con = new connections();
  
- public int addprofile(String firstname,String lastname, String username,String password,String cpass){
+ public int addprofile(String firstname,String lastname, String username,String password,String cpass) throws ClassNotFoundException{
      int x=0;
 try{
-        Class.forName(cn.driver);
-        Connection con = DriverManager.getConnection(cn.local,cn.ps,cn.sr);
+        Class.forName("com.mysql.jdbc.Driver");
+        Connection con = DriverManager.getConnection(con.url, con.username, con.password);
         PreparedStatement st = con.prepareStatement("Insert into insertdata values (null,?,?,?,md5(?))");
         st.setString(1, firstname);
         st.setString(2, lastname);
@@ -29,11 +29,10 @@ try{
         st.setString(4, password);
         x = st.executeUpdate(); 
         
-    } catch (ClassNotFoundException ex) {
-        Logger.getLogger(connections.class.getName()).log(Level.SEVERE, null, ex);
     } catch (SQLException ex) {
         Logger.getLogger(connections.class.getName()).log(Level.SEVERE, null, ex);
-    }return x; 
+    } 
+return x; 
 }
 public int confirmPassword(String pass, String newpass){
     int r = 0;
@@ -49,8 +48,8 @@ public int confirmPassword(String pass, String newpass){
  public int checkUsername(String username){
      int x = 0;
      try {
-         Class.forName(cn.driver);
-         Connection con = DriverManager.getConnection(cn.local,cn.ps,cn.sr);
+         Class.forName("com.mysql.jdbc.Driver");
+         Connection con = DriverManager.getConnection(con.url, con.username, con.password);
          PreparedStatement pre = con.prepareStatement("Select * from bsit23 where username = ?");
          pre.setString(1, username);
          ResultSet rs = pre.executeQuery();
@@ -59,11 +58,10 @@ public int confirmPassword(String pass, String newpass){
          }else{
          x = 0 ;   
          }
-     } catch (ClassNotFoundException ex) {
-         Logger.getLogger(register.class.getName()).log(Level.SEVERE, null, ex);
      } catch (SQLException ex) {
          Logger.getLogger(register.class.getName()).log(Level.SEVERE, null, ex);
-     }return x;
+     }
+return x;
  }
  public int login(String username,String passW){
      int x = 0;
